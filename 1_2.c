@@ -2,75 +2,57 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
-int ston(char* s){
-	int num = 0;
-	int is_negative = 1;
-	if(*s - '0' == '-'){
-		is_negative = -1;
-	}
-	while(*s)
-	{
-		num = num*10 + (*s++ - '0');
-	}
-	return num * is_negative;
+int Change(char* numc){
+int num=0;
+  int i=0;
+   while(numc[i]){
+      num = num * 10 + (numc[i] - '0');
+    i+=1;
 }
-float quad_solution(int a, int b, int c) {
-	double d,x1,x2;
-	d=(b*b)-4*a*c;
-	if (d>0) {
-		x1=(-b+sqrt(d))/(2*a);
-		x2=(-b-sqrt(d))/(2*a);
-		printf("x1=%.3f\n",x1); 
-		printf("x2=%.3f\n",x2); 
-	}
-	else if (d<0) {
-		printf("No real roots\n");
-	}
-	else {
-	x1=(-b+sqrt(d))/(2*a);
-	printf("x1=x2=%.3f\n", x1);
-	}
-	return 0; 
+  return num;
+  }
+void QuadEquat(int a,int b,int c){
+  printf("x1=%f\n",-b+sqrt(b*b-4*a*c));
+  printf("x2=%f\n",-b-sqrt(b*b-4*a*c));
+}
+void Multiplicity(int x, int y){
+  if (x%y==0){
+    printf("кратно\n");
+    return;
+  }
+   printf("не кратно\n");
+}
+void Triangle(int a,int b,int c){
+  if (a+b>c && a+c>b && b+c>a ){
+   printf("может быть сторонами треугольника\n");
+    return;
+  }
+   printf("не может быть сторонами треугольника\n");
 }
 
-int main(int argc, char** argv) {
-	if (argc == 1) {
-		printf("No arguments\n");
-		return 0;
-	}
-	if (!strcmp(argv[1], "-q")) {
-		if(argc != 5) {
-			printf("This flag must have 3 arguments\n");
-			return 0;
-		}
-		quad_solution(ston(argv[2]), ston(argv[3]), ston(argv[4]));
-	}
-	else if (!strcmp(argv[1], "-m")) {
-		if(argc != 4) {
-			printf("This flag must have 2 arguments\n");
-			return 0;
-		}
-		if(argv[2] == "0" || argv[3] == "0"){
-			printf("Arguments must be non-zero\n");
-		}
-		if(ston(argv[2]) % ston(argv[3]) == 0) printf("%s is multiple to %s \n", argv[2], argv[3]);
-		else printf("%s is not multiple to %s \n", argv[2], argv[3]);
-	}
-	else if (!strcmp(argv[1], "-t")) {
-		if(argc != 5) {
-			printf("This flag must have 3 arguments\n");
-			return 0;
-		}
-		int a = ston(argv[2]) * ston(argv[2]);
-		int b = ston(argv[3]) * ston(argv[3]);
-		int c = ston(argv[4]) * ston(argv[4]);
-		if(a + b == c || a + c == b || b + c == a) printf("This numbers can be lengths of right triangle\n");
-		else printf("These numbers can not be lengths of right triangle\n");
-	}
-	else {
-		printf("Wrong argument(s)\n");
-		return 0;
-	}
-	return 0;
+int main(int argc, char** argv){
+  int i=0;
+  int num=0;
+  if (!(argv[1][2]==0 &&(argv[1][0]=='-' || argv[1][0]=='/'))){
+    printf("не правильно набранный флаг\n");
+    return 0;
+  }
+  switch (argv[1][1]){
+    case 'q': if (argc!=5){
+      printf("не соответсвует колличество параметров");
+      break;
+      }
+      QuadEquat(Change(argv[2]),Change(argv[3]),Change(argv[4]));;
+    case 'm': if (argc!=4){
+      printf("не соответсвует колличество параметров");
+      break;
+      }
+      Multiplicity(Change(argv[2]),Change(argv[3]));;
+    case 't': if (argc!=5){
+      printf("не соответсвует колличество параметров");
+      break;
+      }
+      Triangle(Change(argv[2]),Change(argv[3]),Change(argv[4]));
+    }
+  return 0;
 }
